@@ -1,0 +1,45 @@
+{
+  "name": "shared-escape",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "homepage": "https://escape-time.github.io/shared-escape",
+  "scripts": {
+    "dev": "vite",
+    "start": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist -t true"
+  },
+  "dependencies": {
+    "antd": "^5.22.5",
+    "dayjs": "^1.11.13",
+    "gh-pages": "^6.2.0",
+    "react": "^18.3.1",
+    "react-calendar": "^5.1.0",
+    "react-dom": "^18.3.1",
+    "react-lazy-load-image-component": "^1.6.3",
+    "react-router": "^7.1.0",
+    "react-spring-bottom-sheet": "^3.4.1",
+    "styled-components": "^6.1.13",
+    "swiper": "^11.1.15",
+    "uuid": "^11.0.3",
+    "zustand": "^5.0.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "@types/react": "^18.3.17",
+    "@types/react-dom": "^18.3.5",
+    "@types/react-lazy-load-image-component": "^1.6.4",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "^9.17.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.16",
+    "globals": "^15.13.0",
+    "typescript": "~5.6.2",
+    "typescript-eslint": "^8.18.1",
+    "vite": "^6.0.3"
+  }
+}

@@ -12,7 +12,7 @@ export const Card = ({ item, onClick }: { item: ITEM_TYPE; onClick: () => void }
     <CardWrap key={item.id} onClick={onClick}>
       <ImageWrapper>
         <LazyLoadImage
-          src={`//assets/theme-img/thumb_${item.id}.jpg`}
+          src={`/assets/theme-img/thumb_${item.id}.jpg`}
           alt={item.title}
           onError={() => handleImageError(item)}
         />

@@ -30,7 +30,7 @@ export const DetailBottomSheet = ({
     >
       <ItemInner>
         <Inner>
-          <ItemImg src={`//assets/theme-img/thumb_${item.id}.jpg`} alt="" />
+          <ItemImg src={`/assets/theme-img/thumb_${item.id}.jpg`} alt="" />
           <Desc>
             <Title>{item.title}</Title>
             <h2>{item.description}</h2>

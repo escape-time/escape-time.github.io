@@ -18,7 +18,7 @@ export const Details = () => {
     <Wrap>
       <Inner>
         <ImgContainer>
-          <Image src={`/official-escape-time/assets/theme-img/thumb_${id}.jpg`} alt="" />
+          <Image src={`//assets/theme-img/thumb_${id}.jpg`} alt="" />
           {item?.isHorror && (
             <HorrorTextContainer>
               <GenreTag color="danger" variant="solid">

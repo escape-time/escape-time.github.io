@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://escape-time.github.io/shared-escape",
+  "homepage": "https://escape-time.github.io",
   "scripts": {
     "dev": "vite",
     "start": "vite",

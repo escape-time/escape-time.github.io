@@ -1,4 +1,5 @@
 import { Button, DatePicker, Flex, Form, Input, Modal, TimePicker } from 'antd';
+import Title from 'antd/es/typography/Title';
 import type { Dispatch, SetStateAction } from 'react';
 
 export const CalendarSelectModal = ({
@@ -38,23 +39,29 @@ export const CalendarSelectModal = ({
           <Input.TextArea />
         </Form.Item>
 
-        <Flex>
-          <Form.Item rules={[{ required: true, message: '시작 날짜을 선택하세요' }]}>
-            <DatePicker name="start_date" format="YYYY-MM-DD" style={{ width: 130, marginRight: 5 }} suffixIcon />
-          </Form.Item>
-          <Form.Item>
-            <TimePicker name="start_time" style={{ width: 90 }} suffixIcon />
-          </Form.Item>
+        <Flex vertical>
+          <Title level={5}>시작 시간</Title>
+          <Flex>
+            <Form.Item rules={[{ required: true, message: '시작 날짜을 선택하세요' }]}>
+              <DatePicker name="start_date" format="YYYY-MM-DD" style={{ width: 130, marginRight: 5 }} suffixIcon />
+            </Form.Item>
+            <Form.Item>
+              <TimePicker name="start_time" style={{ width: 90 }} suffixIcon />
+            </Form.Item>
+          </Flex>
         </Flex>
 
-        <Flex>
-          <Form.Item rules={[{ required: true, message: '종료 날짜을 선택하세요' }]}>
-            <DatePicker name="end_date" format="YYYY-MM-DD" style={{ width: 130, marginRight: 5 }} suffixIcon />
-          </Form.Item>
+        <Flex vertical>
+          <Title level={5}>종료 시간</Title>
+          <Flex>
+            <Form.Item rules={[{ required: true, message: '종료 날짜을 선택하세요' }]}>
+              <DatePicker name="end_date" format="YYYY-MM-DD" style={{ width: 130, marginRight: 5 }} suffixIcon />
+            </Form.Item>
 
-          <Form.Item rules={[{ required: true, message: '종료 날짜을 선택하세요' }]}>
-            <TimePicker name="end_time" style={{ width: 90 }} suffixIcon />
-          </Form.Item>
+            <Form.Item rules={[{ required: true, message: '종료 날짜을 선택하세요' }]}>
+              <TimePicker name="end_time" style={{ width: 90 }} suffixIcon />
+            </Form.Item>
+          </Flex>
         </Flex>
       </Form>
     </Modal>

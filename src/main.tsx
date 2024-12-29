@@ -1,5 +1,5 @@
 import { createRoot } from 'react-dom/client';
-import { App } from './pages/home';
+import { Home } from './pages/home';
 import { Routes, Route, HashRouter } from 'react-router';
 import { Details } from './pages/details';
 import { createGlobalStyle } from 'styled-components';
@@ -37,7 +37,7 @@ createRoot(document.getElementById('root')!).render(
       <HashRouter>
         <GlobalStyle />
         <Routes>
-          <Route path="/" element={<App />} />
+          <Route path="/" element={<Home />} />
           <Route path="/details/:id" element={<Details />} />
           <Route path="/calendar" element={<CalendarPage />} />
           <Route path="/review" element={<ReviewPage />} />

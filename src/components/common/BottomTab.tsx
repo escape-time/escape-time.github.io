@@ -3,12 +3,10 @@ import {
   CalendarOutlined,
   HomeFilled,
   HomeOutlined,
-  SettingFilled,
-  SettingOutlined,
   StarFilled,
   StarOutlined,
 } from '@ant-design/icons';
-import { Link, useLocation } from 'react-router'; // react-router-dom으로 수정
+import { Link, useLocation } from 'react-router';
 import styled from 'styled-components';
 import { COLOR } from '../../utils/color';
 import { Flex, Typography } from 'antd';
@@ -16,7 +14,7 @@ import { Flex, Typography } from 'antd';
 const { Title } = Typography;
 
 export const BottomTab = () => {
-  const location = useLocation(); // useLocation 훅 사용
+  const location = useLocation();
 
   const isActive = (path: string) => {
     return location.pathname === path;
@@ -32,12 +30,12 @@ export const BottomTab = () => {
           </TabText>
         </Tab>
 
-        {/* <Tab to="/calendar">
+        <Tab to="/calendar">
           {isActive('/calendar') ? <CalendarFilled /> : <CalendarOutlined />}
           <TabText level={5} $isActive={isActive('/calendar')}>
             달력
           </TabText>
-        </Tab> */}
+        </Tab>
 
         <Tab to="/mypage">
           {isActive('/mypage') ? <StarFilled /> : <StarOutlined />}

@@ -7,7 +7,7 @@ import { useAuth } from '../../hook/use-auth';
 import { useDetailReview } from '../../hook/use-detail-review';
 import { Spinner } from '../../components/common/Spinner';
 
-export const App = () => {
+export const Home = () => {
   const { isAuthenticated, isLoading: authLoading } = useAuth();
   const { oneLineReviewList, getOneLineReviewList } = useOneLineReview();
   const { detailReviewList, getDetailReviewList } = useDetailReview();

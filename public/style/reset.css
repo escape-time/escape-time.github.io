@@ -227,6 +227,8 @@ textarea {
 .ant-radio-wrapper span,
 .ant-picker-body,
 .ant-modal-content,
+.ant-form-item-required,
+.ant-form-item-label,
 a {
   font-family: Tenada !important;
 }

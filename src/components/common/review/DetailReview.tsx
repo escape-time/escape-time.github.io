@@ -160,7 +160,7 @@ export const DetailReview = ({ item }: { item: ITEM_TYPE }) => {
           <Rate allowHalf style={{ fontSize: 40, color: COLOR.default }} value={problem_cnt} onChange={setProblemCnt} />
         </Space>
         <Space direction="vertical" align={'center'} style={{ width: '100%' }}>
-          <Title level={4}>인테리어는 어떠셨나요?</Title>
+          <Title level={4}>인테리어 및 연출은 어떠셨나요?</Title>
           <Rate
             allowHalf
             style={{ fontSize: 40, color: COLOR.default }}
@@ -202,7 +202,7 @@ export const DetailReview = ({ item }: { item: ITEM_TYPE }) => {
 
       <Divider />
       <AreaContainer direction="vertical" align={'center'} style={{ width: '100%' }}>
-        <Title level={3}>테마에 대해 알려주세요.</Title>
+        <Title level={3}>총평</Title>
         <TextArea
           value={description}
           onChange={(e) => setDescription(e.target.value)}

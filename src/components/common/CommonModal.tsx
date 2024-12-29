@@ -14,6 +14,7 @@ export const CommonModal = () => {
 
   return (
     <Modal
+      centered
       title="날짜와 시간 선택"
       open={isVisible}
       onCancel={handleCancel}

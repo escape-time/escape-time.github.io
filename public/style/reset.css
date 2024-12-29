@@ -86,6 +86,13 @@ video {
   font: inherit;
   vertical-align: baseline;
 }
+
+#root {
+  overflow-x: hidden;
+  padding-bottom: 60px;
+  box-sizing: border-box;
+  max-height: 100vh;
+}
 /* HTML5 display-role reset for older browsers */
 article,
 aside,
@@ -125,7 +132,7 @@ table {
 
 html,
 body {
-  background-color: rgb(245, 245, 247);
+  background-color: white;
   font-family: Tenada;
 }
 
@@ -145,4 +152,105 @@ a {
 button {
   background-color: transparent;
   border: none;
+}
+
+.ant-picker-calendar-date {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.ant-picker-calendar-date-value {
+  text-align: center;
+}
+
+.ant-picker-content tbody tr:last-child .ant-picker-cell.ant-picker-cell-in-view {
+  display: table-cell;
+}
+
+.ant-picker-body {
+  padding: 0 !important;
+}
+
+.ant-picker-body th {
+  padding: 0 !important;
+  text-align: center;
+}
+
+.ant-picker-panel .ant-picker-body th:nth-child(1) {
+  color: red;
+}
+
+.ant-picker-content tbody tr td.ant-picker-cell-in-view:first-child {
+  color: red;
+}
+
+.ant-picker-panel .ant-picker-body th:nth-child(7) {
+  color: blue;
+}
+
+.ant-picker-content tbody tr td.ant-picker-cell-in-view:nth-child(7) {
+  color: blue;
+}
+
+.ant-picker-calendar-full {
+  height: 100%;
+}
+
+[data-rsbs-overlay],
+[data-rsbs-backdrop],
+[data-rsbs-root]:after {
+  z-index: 100 !important;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+input,
+button,
+textarea {
+  font-family: Tenada !important;
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
+}
+
+.ant-select-selection-item {
+  font-family: Tenada !important;
+  margin-bottom: 0 !important;
+  margin-top: 0 !important;
+}
+
+.ant-typography,
+.ant-radio-wrapper span,
+.ant-picker-body,
+.ant-modal-content,
+a {
+  font-family: Tenada !important;
+}
+
+.ant-select-selection-item {
+  padding-top: 4px !important;
+}
+
+.ant-picker-dropdown {
+  position: fixed !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  z-index: 100000;
+}
+
+input[type='number']::-webkit-outer-spin-button,
+input[type='number']::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* 파이어폭스에서의 초기화 방법 */
+input[type='number'] {
+  -moz-appearance: textfield;
 }

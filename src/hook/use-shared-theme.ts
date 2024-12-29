@@ -10,6 +10,7 @@ export const useShareTheme = () => {
     const time = selectedTime.format('HH:mm');
     if (!targetItem) return;
 
+    console.log(targetItem);
     const imageUrl = `https://escape-time.github.io/assets/theme-img/thumb_${targetItem.id}.jpg`;
 
     Kakao.Share.sendDefault({
@@ -24,6 +25,11 @@ export const useShareTheme = () => {
           mobileWebUrl: `https://escape-time.github.io/#/details/${targetItem.id}`,
           webUrl: `https://escape-time.github.io/#/details/${targetItem.id}`,
         },
+      },
+      social: {
+        likeCount: 286,
+        commentCount: 45,
+        sharedCount: 845,
       },
       buttons: [
         {

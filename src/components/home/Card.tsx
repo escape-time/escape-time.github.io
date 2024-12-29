@@ -1,44 +1,150 @@
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import { ITEM_TYPE } from '../../type';
+import { Button, Flex, Typography } from 'antd';
+import { DetailReviewType, ITEM_TYPE, OneLineReviewType } from '../../type';
 import styled from 'styled-components';
+import { useModalStore } from '../../store/modal-store';
+import { Link } from 'react-router';
+import { useState } from 'react';
+import { ReviewBottomSheet } from '../common/review/ReviewBottomSheet';
+import { COLOR } from '../../utils/color';
+import { loginModalStore } from '../../store/login-modal-store';
+import { useAuth } from '../../hook/use-auth';
+import { detailReviewStore } from '../../store/detail-review-store';
+import { oneLineReviewStore } from '../../store/online-review-store';
 
-export const Card = ({ item, onClick }: { item: ITEM_TYPE; onClick: () => void }) => {
-  const handleImageError = (item: ITEM_TYPE) => {
-    console.error(`Image not found for title: ${item.title}`);
-    console.error(`Image not found for id: ${item.id}`);
+const { Title } = Typography;
+export const Card = ({
+  item,
+  oneLineReview,
+  detailReview,
+}: {
+  item: ITEM_TYPE;
+  oneLineReview: OneLineReviewType | undefined;
+  detailReview: DetailReviewType | undefined;
+}) => {
+  const { showVisible } = loginModalStore();
+  const { isAuthenticated } = useAuth();
+  const [open, setOpen] = useState(false);
+  const [selectItem, setSeletItem] = useState<ITEM_TYPE>();
+  const { setIsVisible, setSelectedId } = useModalStore();
+  const { setDetailReview } = detailReviewStore();
+  const { setOneLineReview } = oneLineReviewStore();
+
+  const handleImageError: React.ReactEventHandler<HTMLImageElement> = (e) => {
+    const target = e.target as HTMLImageElement;
+    target.src = '/default-image.png';
   };
 
   return (
-    <CardWrap key={item.id} onClick={onClick}>
-      <ImageWrapper>
-        <LazyLoadImage
-          src={`/assets/theme-img/thumb_${item.id}.jpg`}
-          alt={item.title}
-          onError={() => handleImageError(item)}
-        />
-      </ImageWrapper>
+    <>
+      <ReviewBottomSheet open={open} close={() => setOpen(false)} item={selectItem} />
+      <CardWrap key={item.id} style={{ backgroundColor: oneLineReview || detailReview ? '#21f765' : '' }}>
+        {item.isHorror && (
+          <HorrorTextContainer>
+            <GenreTag color="danger" variant="solid">
+              공포
+            </GenreTag>
+          </HorrorTextContainer>
+        )}
+        <Link to={`/details/${item.id}`}>
+          <Flex align="center" vertical>
+            <ImageWrapper>
+              <img src={`/assets/theme-img/thumb_${item.id}.jpg`} alt={item.title} onError={handleImageError} />
+            </ImageWrapper>
 
-      <TextContainer>
-        <Title>{item.title}</Title>
-      </TextContainer>
+            <TextContainer>
+              <CardTitle level={3} ellipsis>
+                {item.title}
+              </CardTitle>
+            </TextContainer>
 
-      <InfoContainer>
-        <Info>
-          가격(1인) <br /> {item.price}
-        </Info>
-        <Info>
-          위치 <br /> {item.location}
-        </Info>
-        <Info>
-          시간 <br />
-          {item.playtime}
-        </Info>
-      </InfoContainer>
-    </CardWrap>
+            <InfoContainer justify="space-between">
+              <Info level={5}>
+                가격 <br /> {item.price}
+              </Info>
+              <Info level={5}>
+                위치 <br /> {item.location}
+              </Info>
+              <Info level={5}>
+                시간 <br />
+                {item.playtime}
+              </Info>
+            </InfoContainer>
+          </Flex>
+        </Link>
+        <Flex>
+          <BottomButton
+            size="large"
+            type="primary"
+            onClick={() => {
+              setSelectedId(item.id);
+              setIsVisible(true);
+            }}
+          >
+            공유하기
+          </BottomButton>
+          <BottomButton
+            size="large"
+            type="default"
+            onClick={() => {
+              if (!isAuthenticated) {
+                showVisible();
+                return;
+              }
+              if (oneLineReview) setOneLineReview(oneLineReview);
+              if (detailReview) setDetailReview(detailReview);
+              setOpen(true);
+              setSeletItem(item);
+            }}
+          >
+            리뷰{oneLineReview || detailReview ? '수정' : '작성'}
+          </BottomButton>
+        </Flex>
+      </CardWrap>
+    </>
   );
 };
 
+const GenreTag = styled(Button)`
+  pointer-events: none;
+  cursor: default;
+  opacity: 1 !important;
+  user-select: none;
+  border-radius: 0;
+  padding-bottom: 0;
+  &:hover,
+  &:focus,
+  &:active {
+    opacity: 1 !important;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+`;
+
+const HorrorTextContainer = styled.div`
+  position: absolute;
+  top: 98px;
+  right: 0px;
+  padding-bottom: 0;
+  z-index: 2;
+`;
+
+const BottomButton = styled(Button)`
+  width: 100%;
+  flex: 1;
+  border-radius: 0;
+
+  &:nth-child(1) {
+    border-bottom-left-radius: 10px;
+  }
+
+  &:nth-child(2) {
+    border-bottom-right-radius: 10px;
+    border: none;
+  }
+`;
+
 const CardWrap = styled.section`
+  position: relative;
   width: calc(25% - 20px);
   border-radius: 10px;
   box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
@@ -48,7 +154,8 @@ const CardWrap = styled.section`
 
   margin-right: 10px;
   margin-left: 10px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
+  box-sizing: border-box;
 
   &:hover {
     transform: scale(1.05);
@@ -56,14 +163,17 @@ const CardWrap = styled.section`
   }
 
   @media (max-width: 767px) {
-    width: calc(50% - 20px);
+    width: calc(50% - 10px);
+    margin-right: 5px;
+    margin-left: 5px;
   }
 `;
 
 const ImageWrapper = styled.div`
+  width: 100%;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
-  height: 150px;
+  height: 130px;
 
   img {
     width: 100%;
@@ -71,47 +181,34 @@ const ImageWrapper = styled.div`
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     object-fit: cover;
-    object-position: top;
+    object-position: center;
   }
 `;
 
 const TextContainer = styled.div`
   padding: 15px;
+  width: 100%;
+  box-sizing: border-box;
+  padding-bottom: 10px;
 `;
 
-const Title = styled.h3`
-  color: black;
+const CardTitle = styled(Title)`
   text-align: center;
   text-decoration: none;
-  font-size: 20px;
-  line-height: 24px;
-
-  width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
 `;
 
-const InfoContainer = styled.div`
-  display: flex;
+const InfoContainer = styled(Flex)`
   width: 100%;
   height: 100%;
-  justify-content: space-between;
-  align-items: center;
-  padding-left: 20px;
-  padding-right: 20px;
   flex-wrap: wrap;
   box-sizing: border-box;
-  background: rgb(22, 119, 255);
+  background: ${COLOR.default};
   padding-bottom: 10px;
   padding-top: 13px;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
 `;
 
-const Info = styled.h4`
+const Info = styled(Title)`
   text-align: center;
-  color: #fefae0;
-  font-size: 14px;
-  font-family: Tenada;
+  color: white !important;
+  flex: 1;
 `;

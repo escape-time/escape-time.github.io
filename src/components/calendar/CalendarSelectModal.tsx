@@ -6,9 +6,9 @@ import data from '../../assets/data/new-data.json';
 import { formatKoreanCurrency } from '../../utils';
 import { CloseCircleFilled } from '@ant-design/icons';
 import styled from 'styled-components';
-import { supabase } from '../../utils/supabase';
 import { Spinner } from '../common/Spinner';
 import { authStore } from '../../store/auth-store';
+import { useCalendarStore } from '../../store/date-event-store';
 
 const { Title, Text } = Typography;
 export const CalendarSelectModal = ({
@@ -20,8 +20,8 @@ export const CalendarSelectModal = ({
   setIsModalVisible: Dispatch<SetStateAction<boolean>>;
   selectDate: string;
 }) => {
+  const { addEvent, isLoading } = useCalendarStore();
   const { user } = authStore();
-  const [loading, setLoading] = useState(false);
   const [themeId, setThemeId] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const [always, setAlways] = useState(false);
@@ -50,24 +50,24 @@ export const CalendarSelectModal = ({
   }, [findTheme, form]);
 
   const insertEvent = async () => {
-    setLoading(true);
-    await supabase.from('calendar_events').insert({
+    const newEvent = {
       title: form.getFieldValue('title'),
       description: form.getFieldValue('description'),
       start_date: form.getFieldValue('start_date'),
       end_date: form.getFieldValue('end_date'),
       start_time: form.getFieldValue('start_time'),
       end_time: form.getFieldValue('end_time'),
-      theme_id: themeId,
-      user_id: user?.id,
+      theme_id: themeId || '',
+      user_id: user?.id || '',
       is_always: always,
       target_date: selectDate,
-    });
-    setLoading(false);
+    };
+
+    await addEvent(newEvent);
   };
   return (
     <>
-      {loading && <Spinner />}
+      {isLoading && <Spinner />}
       <Modal
         centered
         title={'새 이벤트'}

@@ -1,15 +1,21 @@
 import dayjs from 'dayjs';
 import styled from 'styled-components';
+import { useCalendarStore } from '../../store/date-event-store';
+import { authStore } from '../../store/auth-store';
 
 export const DateEventList = (value: dayjs.Dayjs) => {
-  // const dayEvents = events.filter((event) => {
-  //   const eventDate = dayjs(event.start_time);
-  //   return eventDate.isSame(value, 'day');
-  // });
+  const { user } = authStore();
+  const { events } = useCalendarStore();
+  const dayEvents = events.filter((event) => {
+    const eventDate = dayjs(event.start_date).format('YYYY-MM-DD');
+    const selectedDate = dayjs(value).format('YYYY-MM-DD');
+
+    return selectedDate === eventDate;
+  });
 
   return (
     <EventList>
-      {/* {dayEvents.map((event) => (
+      {dayEvents.map((event) => (
         <EventItem
           key={event.id}
           onClick={(e) => {
@@ -19,7 +25,7 @@ export const DateEventList = (value: dayjs.Dayjs) => {
         >
           {event.title}
         </EventItem>
-      ))} */}
+      ))}
     </EventList>
   );
 };

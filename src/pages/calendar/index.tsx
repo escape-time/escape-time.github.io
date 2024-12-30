@@ -8,10 +8,11 @@ import { CalendarSelectModal } from '../../components/calendar/CalendarSelectMod
 import { CalendarHeader } from '../../components/calendar/CalendarHeader';
 import { DateEventList } from '../../components/calendar/DateEvent';
 import { authStore } from '../../store/auth-store';
-import { supabase } from '../../utils/supabase';
+import { useCalendarStore } from '../../store/date-event-store';
 dayjs.locale('ko');
 
 export const CalendarPage = () => {
+  const { getEvents } = useCalendarStore();
   const { user } = authStore();
   const [selectDate, setSelectDate] = useState(dayjs().format('YYYY-MM-DD'));
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -29,15 +30,9 @@ export const CalendarPage = () => {
 
   useEffect(() => {
     if (user) {
-      supabase
-        .from('calendar_events')
-        .select()
-        .eq('user_id', user.id)
-        .then(({ data }) => {
-          console.log(data);
-        });
+      getEvents(user.id);
     }
-  }, [user]);
+  }, [user, getEvents]);
 
   return (
     <ConfigProvider locale={locale}>

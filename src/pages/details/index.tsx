@@ -6,16 +6,22 @@ import { useModalStore } from '../../store/modal-store';
 import { formatKoreanCurrency } from '../../utils';
 import { COLOR } from '../../utils/color';
 import { BackHeader } from '../../components/common/BackHeader';
+import { useEffect, useRef } from 'react';
 
 const { Title, Text } = Typography;
 export const Details = () => {
+  const ref = useRef<HTMLDivElement>(null);
   const { setIsVisible, setSelectedId } = useModalStore();
   const { id } = useParams();
   const item = data.find((i) => i.id === id);
   const isPush = item?.description.includes('밀어내기');
 
+  useEffect(() => {
+    ref.current?.scrollIntoView();
+  }, []);
+
   return (
-    <Wrap>
+    <Wrap ref={ref}>
       <Inner wrap align="center" justify="center">
         <BackHeader title={item?.title + '' || ''} />
         <Divider />

@@ -7,9 +7,9 @@ import { useState } from 'react';
 import { ReviewBottomSheet } from '../common/review/ReviewBottomSheet';
 import { COLOR } from '../../utils/color';
 import { loginModalStore } from '../../store/login-modal-store';
-import { useAuth } from '../../hook/use-auth';
 import { detailReviewStore } from '../../store/detail-review-store';
 import { oneLineReviewStore } from '../../store/online-review-store';
+import { authStore } from '../../store/auth-store';
 
 const { Title } = Typography;
 export const Card = ({
@@ -22,7 +22,7 @@ export const Card = ({
   detailReview: DetailReviewType | undefined;
 }) => {
   const { showVisible } = loginModalStore();
-  const { isAuthenticated } = useAuth();
+  const { user } = authStore();
   const [open, setOpen] = useState(false);
   const [selectItem, setSeletItem] = useState<ITEM_TYPE>();
   const { setIsVisible, setSelectedId } = useModalStore();
@@ -94,7 +94,7 @@ export const Card = ({
             size="large"
             type="default"
             onClick={() => {
-              if (!isAuthenticated) {
+              if (user) {
                 showVisible();
                 return;
               }

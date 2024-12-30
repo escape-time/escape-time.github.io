@@ -1,12 +1,12 @@
 import { useCallback, useState } from 'react';
 import { supabase } from '../utils/supabase';
-import { useAuth } from './use-auth';
 import { listStore } from '../store/list-store';
+import { authStore } from '../store/auth-store';
 
 export const useOneLineReview = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { setOneLineReviewList, oneLineReviewList } = listStore();
-  const { user } = useAuth();
+  const { user } = authStore();
 
   const getOneLineReviewList = useCallback(async () => {
     if (!user) return [];

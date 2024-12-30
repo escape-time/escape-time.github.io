@@ -1,15 +1,12 @@
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { Button, Row } from 'antd';
+import Title from 'antd/es/typography/Title';
 import dayjs, { Dayjs } from 'dayjs';
+import styled from 'styled-components';
+import { COLOR } from '../../utils/color';
 
 export const CalendarHeader = ({ value, onChange }: { value: Dayjs; onChange: (date: Dayjs) => void }) => {
   const current = value.clone();
-  const year = current.year();
-
-  const years = [];
-  for (let i = year - 10; i < year + 10; i += 1) {
-    years.push(i);
-  }
 
   const handlePrevMonth = () => {
     const newDate = current.clone().subtract(1, 'month');
@@ -26,13 +23,22 @@ export const CalendarHeader = ({ value, onChange }: { value: Dayjs; onChange: (d
   };
 
   return (
-    <Row justify="space-between" align="middle">
+    <CalendarHeaderContainer justify="space-between" align="middle">
       <Button.Group>
         <Button icon={<LeftOutlined />} onClick={handlePrevMonth} />
         <Button icon={<RightOutlined />} onClick={handleNextMonth} />
       </Button.Group>
-      <h3>{dayjs(value).format('YYYY-MM')}</h3>
+      <Title level={4}>{dayjs(value).format('YYYY-MM')}</Title>
       <Button onClick={handleToday}>오늘</Button>
-    </Row>
+    </CalendarHeaderContainer>
   );
 };
+
+const CalendarHeaderContainer = styled(Row)`
+  padding-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid ${COLOR.borderColor};
+  margin-bottom: 10px;
+`;

@@ -2,13 +2,18 @@ import { Cascader, Input, Space } from 'antd';
 import styled from 'styled-components';
 
 interface FilterProps {
-  setFilters: React.Dispatch<
-    React.SetStateAction<{
-      location: string;
-      area: string;
-      searchTerm: string;
-    }>
-  >;
+  setFilters: (
+    newFilters: Omit<
+      {
+        location: string;
+        area: string;
+        searchTerm: string;
+        page: number;
+        itemsPerPage: number;
+      },
+      'page' | 'itemsPerPage'
+    >
+  ) => void;
   filters: {
     location: string;
     area: string;

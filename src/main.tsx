@@ -4,7 +4,6 @@ import { Routes, Route, HashRouter } from 'react-router';
 import { Details } from './pages/details';
 import { createGlobalStyle } from 'styled-components';
 import { CommonModal } from './components/common/CommonModal';
-import { AuthProvider } from './auth/AuthProvider';
 import { ConfigProvider } from 'antd';
 import { BottomTab } from './components/common/BottomTab';
 import { CalendarPage } from './pages/calendar';
@@ -23,28 +22,26 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 createRoot(document.getElementById('root')!).render(
-  <AuthProvider>
-    <ConfigProvider
-      theme={{
-        token: {
-          colorPrimary: '365486',
-          colorLink: '365486',
-        },
-      }}
-    >
-      <CommonModal />
-      <LoginModal />
-      <HashRouter>
-        <GlobalStyle />
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/details/:id" element={<Details />} />
-          <Route path="/calendar" element={<CalendarPage />} />
-          <Route path="/review/:id" element={<ReviewPage />} />
-          <Route path="/mypage" element={<MyPage />} />
-        </Routes>
-        <BottomTab />
-      </HashRouter>
-    </ConfigProvider>
-  </AuthProvider>
+  <ConfigProvider
+    theme={{
+      token: {
+        colorPrimary: '365486',
+        colorLink: '365486',
+      },
+    }}
+  >
+    <CommonModal />
+    <LoginModal />
+    <HashRouter>
+      <GlobalStyle />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/details/:id" element={<Details />} />
+        <Route path="/calendar" element={<CalendarPage />} />
+        <Route path="/review/:id" element={<ReviewPage />} />
+        <Route path="/mypage" element={<MyPage />} />
+      </Routes>
+      <BottomTab />
+    </HashRouter>
+  </ConfigProvider>
 );

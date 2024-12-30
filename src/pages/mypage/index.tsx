@@ -6,23 +6,25 @@ import styled from 'styled-components';
 import { COLOR } from '../../utils/color';
 import { useOneLineReview } from '../../hook/use-oneline-review';
 import { useDetailReview } from '../../hook/use-detail-review';
+import { authStore } from '../../store/auth-store';
 
 const { Title } = Typography;
 export const MyPage = () => {
   const { showVisible } = loginModalStore();
-  const { isAuthenticated, user, isLoading, signOutKakao } = useAuth();
+  const { signOutKakao } = useAuth();
+  const { user, loading } = authStore();
   const { oneLineReviewList, getOneLineReviewList } = useOneLineReview();
   const { detailReviewList, getDetailReviewList } = useDetailReview();
 
   useEffect(() => {
-    if (!isLoading && !isAuthenticated) {
+    if (!loading && !user) {
       showVisible();
       return;
     }
     Promise.all([getOneLineReviewList(), getDetailReviewList()]);
-  }, [isAuthenticated, isLoading, showVisible, getOneLineReviewList, getDetailReviewList]);
+  }, [user, loading, showVisible, getOneLineReviewList, getDetailReviewList]);
 
-  if (isLoading)
+  if (loading)
     return (
       <Flex
         align="center"

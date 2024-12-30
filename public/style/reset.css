@@ -230,6 +230,7 @@ textarea {
 .ant-modal-content,
 .ant-form-item-required,
 .ant-form-item-label,
+.ant-checkbox-wrapper span,
 a {
   font-family: Tenada !important;
 }
@@ -264,4 +265,12 @@ input[type='number'] {
 
 .ant-picker-calendar-date-content {
   height: 11vh !important;
+}
+
+.ant-form-item {
+  margin-bottom: 0;
+}
+
+.ant-form-item-label {
+  padding-bottom: 0;
 }

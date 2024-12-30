@@ -3,25 +3,25 @@ import { List } from '../../components/home/List';
 import { Flex } from 'antd';
 import { useOneLineReview } from '../../hook/use-oneline-review';
 import { useEffect } from 'react';
-import { useAuth } from '../../hook/use-auth';
 import { useDetailReview } from '../../hook/use-detail-review';
 import { Spinner } from '../../components/common/Spinner';
+import { authStore } from '../../store/auth-store';
 
 export const Home = () => {
-  const { isAuthenticated, isLoading: authLoading } = useAuth();
+  const { user, loading } = authStore();
   const { oneLineReviewList, getOneLineReviewList } = useOneLineReview();
   const { detailReviewList, getDetailReviewList } = useDetailReview();
 
   useEffect(() => {
-    if (!authLoading && !isAuthenticated) {
+    if (!loading && !user) {
       return;
     }
     Promise.all([getOneLineReviewList(), getDetailReviewList()]);
-  }, [isAuthenticated, authLoading, getOneLineReviewList, getDetailReviewList]);
+  }, [user, loading, getOneLineReviewList, getDetailReviewList]);
 
   return (
     <>
-      {authLoading && <Spinner />}
+      {loading && <Spinner />}
       <Inner wrap justify="center">
         <List oneLineReviewList={oneLineReviewList} detailReviewList={detailReviewList} />
       </Inner>

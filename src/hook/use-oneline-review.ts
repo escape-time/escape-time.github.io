@@ -60,7 +60,7 @@ export const useOneLineReview = () => {
         user_id: user?.id || '',
       });
       console.log(result);
-      getOneLineReviewList();
+      await getOneLineReviewList();
     } catch (error) {
       console.log(error);
     } finally {

@@ -49,7 +49,7 @@ export const useDetailReview = () => {
         ])
         .select()
         .single();
-
+      await getDetailReviewList();
       console.log(data);
     } catch (error) {
       console.log(error);
@@ -86,7 +86,7 @@ export const useDetailReview = () => {
         .eq('id', params.id)
         .select()
         .single();
-      getDetailReviewList();
+      await getDetailReviewList();
     } catch (error) {
       console.log(error);
     } finally {

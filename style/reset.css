@@ -227,6 +227,8 @@ textarea {
 .ant-radio-wrapper span,
 .ant-picker-body,
 .ant-modal-content,
+.ant-form-item-required,
+.ant-form-item-label,
 a {
   font-family: Tenada !important;
 }
@@ -253,4 +255,12 @@ input[type='number']::-webkit-inner-spin-button {
 /* 파이어폭스에서의 초기화 방법 */
 input[type='number'] {
   -moz-appearance: textfield;
+}
+
+.ant-form-item-required::before {
+  padding-bottom: 7px;
+}
+
+.ant-picker-calendar-date-content {
+  height: 11vh !important;
 }

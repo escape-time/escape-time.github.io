@@ -6,9 +6,18 @@ import styled from 'styled-components';
 const { Title } = Typography;
 export const BackHeader = ({ title }: { title: string }) => {
   const navigate = useNavigate();
+
+  const handleBackClick = () => {
+    if (window.history.length > 2) {
+      navigate(-1);
+    } else {
+      navigate('/');
+    }
+  };
+
   return (
     <BackContainer align="center" justify="space-between">
-      <LeftOutlined onClick={() => navigate(-1)} />
+      <LeftOutlined onClick={handleBackClick} />
       <Title level={3}>{title}</Title>
       <div style={{ width: 15, height: 15 }}></div>
     </BackContainer>

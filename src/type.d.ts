@@ -64,4 +64,14 @@ export interface DetailReviewType {
   description: string;
   theme_id: string;
   etc?: string;
+  id?: string;
+}
+
+export interface CommentType {
+  id: string;
+  rating: number;
+  comment_text: string;
+  nickname: string;
+  review_id: string;
+  created_at: string;
 }

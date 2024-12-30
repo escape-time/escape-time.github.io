@@ -26,8 +26,8 @@ export const Card = ({
   const [open, setOpen] = useState(false);
   const [selectItem, setSeletItem] = useState<ITEM_TYPE>();
   const { setIsVisible, setSelectedId } = useModalStore();
-  const { setDetailReview } = detailReviewStore();
-  const { setOneLineReview } = oneLineReviewStore();
+  const { setDetailReview, resetDetailReview } = detailReviewStore();
+  const { setOneLineReview, resetOneLineReviews } = oneLineReviewStore();
 
   const handleImageError: React.ReactEventHandler<HTMLImageElement> = (e) => {
     const target = e.target as HTMLImageElement;
@@ -90,8 +90,16 @@ export const Card = ({
                 showVisible();
                 return;
               }
-              if (oneLineReview) setOneLineReview(oneLineReview);
-              if (detailReview) setDetailReview(detailReview);
+              if (oneLineReview) {
+                setOneLineReview(oneLineReview);
+              } else {
+                resetOneLineReviews();
+              }
+              if (detailReview) {
+                setDetailReview(detailReview);
+              } else {
+                resetDetailReview();
+              }
               setOpen(true);
               setSeletItem(item);
             }}

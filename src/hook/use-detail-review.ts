@@ -58,5 +58,41 @@ export const useDetailReview = () => {
     }
   };
 
-  return { detailReviewList, getDetailReviewList, addDetailReview, isLoading };
+  const updateDetailReview = async (params: DetailReviewType) => {
+    setIsLoading(true);
+    try {
+      // 리뷰 생성
+      await supabase
+        .from('detail_reviews')
+        .update({
+          is_success: params.is_success,
+          group_cnt: params.group_cnt,
+          visit_date: params.visit_date,
+          use_hint_cnt: params.use_hint_cnt,
+          play_time_minutes: params.play_time_minutes,
+          play_time_seconds: params.play_time_seconds,
+          satisfies_cnt: params.satisfies_cnt,
+          story_cnt: params.story_cnt,
+          problem_cnt: params.problem_cnt,
+          interior_cnt: params.interior_cnt,
+          level: params.level,
+          horror_cnt: params.horror_cnt,
+          health_cnt: params.health_cnt,
+          description: params.description,
+          theme_id: params.theme_id,
+          etc: params.etc,
+          user_id: user?.id,
+        })
+        .eq('id', params.id)
+        .select()
+        .single();
+      getDetailReviewList();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return { detailReviewList, getDetailReviewList, addDetailReview, isLoading, updateDetailReview };
 };

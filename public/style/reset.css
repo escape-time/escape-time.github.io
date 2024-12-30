@@ -260,3 +260,7 @@ input[type='number'] {
 .ant-form-item-required::before {
   padding-bottom: 7px;
 }
+
+.ant-picker-calendar-date-content {
+  height: 11vh !important;
+}

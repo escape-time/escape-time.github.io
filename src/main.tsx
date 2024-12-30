@@ -40,7 +40,7 @@ createRoot(document.getElementById('root')!).render(
           <Route path="/" element={<Home />} />
           <Route path="/details/:id" element={<Details />} />
           <Route path="/calendar" element={<CalendarPage />} />
-          <Route path="/review" element={<ReviewPage />} />
+          <Route path="/review/:id" element={<ReviewPage />} />
           <Route path="/mypage" element={<MyPage />} />
         </Routes>
         <BottomTab />

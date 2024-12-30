@@ -1,4 +1,4 @@
-import { DatePicker, Divider, Flex, Input, Radio, Rate, Select, Space, Typography } from 'antd';
+import { Button, DatePicker, Divider, Flex, Input, Radio, Rate, Select, Space, Typography } from 'antd';
 import TextArea from 'antd/es/input/TextArea';
 import styled from 'styled-components';
 import { COLOR } from '../../../utils/color';
@@ -7,11 +7,13 @@ import { ITEM_TYPE } from '../../../type';
 import { detailReviewStore } from '../../../store/detail-review-store';
 import { useDetailReview } from '../../../hook/use-detail-review';
 import { Spinner } from '../Spinner';
+import { useShareTheme } from '../../../hook/use-shared-theme';
 
 const { Title, Text } = Typography;
 
 export const DetailReview = ({ item }: { item: ITEM_TYPE }) => {
-  const { addDetailReview, isLoading } = useDetailReview();
+  const { requestWriteReview } = useShareTheme();
+  const { addDetailReview, updateDetailReview, isLoading } = useDetailReview();
   const {
     is_success,
     group_cnt,
@@ -42,7 +44,8 @@ export const DetailReview = ({ item }: { item: ITEM_TYPE }) => {
     setHealthCnt,
     setDescription,
     setEtc,
-    resetStore,
+    id,
+    isUpdate,
   } = detailReviewStore();
   return (
     <>
@@ -224,49 +227,88 @@ export const DetailReview = ({ item }: { item: ITEM_TYPE }) => {
       <CompleteContainer>
         <CompleteButton
           onClick={async () => {
-            await addDetailReview({
-              description,
-              group_cnt,
-              health_cnt,
-              horror_cnt,
-              interior_cnt,
-              level,
-              play_time_minutes,
-              play_time_seconds,
-              problem_cnt,
-              satisfies_cnt,
-              story_cnt,
-              theme_id: item.id,
-              use_hint_cnt,
-              visit_date,
-              etc,
-              is_success,
-            });
-            resetStore();
+            if (!isUpdate) {
+              await addDetailReview({
+                description,
+                group_cnt,
+                health_cnt,
+                horror_cnt,
+                interior_cnt,
+                level,
+                play_time_minutes,
+                play_time_seconds,
+                problem_cnt,
+                satisfies_cnt,
+                story_cnt,
+                theme_id: item.id,
+                use_hint_cnt,
+                visit_date,
+                etc,
+                is_success,
+              });
+            } else {
+              updateDetailReview({
+                description,
+                group_cnt,
+                health_cnt,
+                horror_cnt,
+                interior_cnt,
+                level,
+                play_time_minutes,
+                play_time_seconds,
+                problem_cnt,
+                satisfies_cnt,
+                story_cnt,
+                theme_id: item.id,
+                use_hint_cnt,
+                visit_date,
+                etc,
+                is_success,
+                id,
+              });
+            }
             close();
           }}
         >
-          완료
+          {isUpdate ? '수정' : '완료'}
         </CompleteButton>
+        {isUpdate && (
+          <ShareButton
+            type="link"
+            onClick={() => {
+              requestWriteReview(item.id, id);
+            }}
+          >
+            리뷰 공유 하기
+          </ShareButton>
+        )}
       </CompleteContainer>
     </>
   );
 };
+
+const ShareButton = styled(Button)`
+  flex: 1;
+  height: 50px;
+  border: 0;
+  font-size: 16px;
+`;
 
 const CompleteButton = styled.button`
   background-color: ${COLOR.lightBlue};
   width: 100%;
   height: 50px;
   color: white;
-  font-size: 22px;
+  font-size: 16px;
   cursor: pointer;
+  flex: 1;
 
   &:hover {
     opacity: 0.8;
   }
 `;
 
-const CompleteContainer = styled.div`
+const CompleteContainer = styled(Flex)`
   width: 100%;
   bottom: 0;
 `;

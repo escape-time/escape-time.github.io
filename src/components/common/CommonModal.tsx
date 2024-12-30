@@ -5,7 +5,7 @@ import { useModalStore } from '../../store/modal-store';
 import { useShareTheme } from '../../hook/use-shared-theme';
 
 export const CommonModal = () => {
-  const { shareToKakao } = useShareTheme();
+  const { shareThemeToKakao } = useShareTheme();
   const { isVisible, selectedDate, setDate, setIsVisible, setTime, selectedTime, selectedId } = useModalStore();
 
   const handleCancel = () => {
@@ -27,7 +27,7 @@ export const CommonModal = () => {
           type="primary"
           onClick={() => {
             setIsVisible(false);
-            shareToKakao(selectedId);
+            shareThemeToKakao(selectedId);
           }}
         >
           공유하기

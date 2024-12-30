@@ -4,13 +4,11 @@ import styled from 'styled-components';
 import { Button, Divider, Flex, Space, Typography } from 'antd';
 import { useModalStore } from '../../store/modal-store';
 import { formatKoreanCurrency } from '../../utils';
-import { LeftOutlined } from '@ant-design/icons';
-import { useNavigate } from 'react-router';
 import { COLOR } from '../../utils/color';
+import { BackHeader } from '../../components/common/BackHeader';
 
 const { Title, Text } = Typography;
 export const Details = () => {
-  const navigate = useNavigate();
   const { setIsVisible, setSelectedId } = useModalStore();
   const { id } = useParams();
   const item = data.find((i) => i.id === id);
@@ -19,12 +17,7 @@ export const Details = () => {
   return (
     <Wrap>
       <Inner wrap align="center" justify="center">
-        <BackContainer align="center" justify="space-between">
-          <LeftOutlined onClick={() => navigate(-1)} />
-          <Title level={3}>{item?.title}</Title>
-          <div style={{ width: 15, height: 15 }}></div>
-        </BackContainer>
-
+        <BackHeader title={item?.title + '' || ''} />
         <Divider />
 
         <ImgContainer justify="center">
@@ -188,12 +181,4 @@ const ButtonContainer = styled.div`
 const InfoTitle = styled(Title)`
   color: ${COLOR.gray} !important;
   text-align: center;
-`;
-
-const BackContainer = styled(Flex)`
-  width: 100%;
-  padding-top: 32px;
-  span {
-    margin-bottom: 10px;
-  }
 `;

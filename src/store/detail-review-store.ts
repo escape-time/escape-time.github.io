@@ -21,6 +21,7 @@ interface DetailReview {
   description: string;
   theme_id: string;
   etc: string;
+  isUpdate: boolean;
 }
 
 interface DetailReviewActions {
@@ -39,8 +40,9 @@ interface DetailReviewActions {
   setDescription: (value: string) => void;
   setThemeId: (value: string) => void;
   setEtc: (value: string) => void;
-  resetStore: () => void;
+  resetDetailReview: () => void;
   setDetailReview: (review: DetailReviewType) => void;
+  setIsUpdate: (u: boolean) => void;
 }
 
 type DetailReviewStore = DetailReview & DetailReviewActions;
@@ -63,6 +65,7 @@ const initialState: DetailReview = {
   description: '',
   theme_id: '',
   etc: '',
+  isUpdate: false,
 };
 
 export const detailReviewStore = create<DetailReviewStore>((set) => ({
@@ -82,6 +85,7 @@ export const detailReviewStore = create<DetailReviewStore>((set) => ({
   setDescription: (value) => set({ description: value }),
   setThemeId: (value) => set({ theme_id: value }),
   setEtc: (value) => set({ etc: value }),
-  resetStore: () => set({ ...initialState, id: v4() }),
-  setDetailReview: (review) => set({ ...review, visit_date: dayjs(review.visit_date) }),
+  resetDetailReview: () => set({ ...initialState, id: v4() }),
+  setDetailReview: (review) => set({ ...review, visit_date: dayjs(review.visit_date), isUpdate: true }),
+  setIsUpdate: (value) => set({ isUpdate: value }),
 }));

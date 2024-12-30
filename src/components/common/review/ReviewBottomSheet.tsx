@@ -1,6 +1,6 @@
 import { BottomSheet } from 'react-spring-bottom-sheet';
 import { ITEM_TYPE } from '../../../type';
-import { Button, Flex } from 'antd';
+import { Flex } from 'antd';
 import 'react-spring-bottom-sheet/dist/style.css';
 import styled from 'styled-components';
 import { Typography } from 'antd';
@@ -41,16 +41,14 @@ export const ReviewBottomSheet = ({
       <div id="date-picker-container"></div>
       <ItemWrap>
         <TitleContainer>
-          <TitleInner justify="space-between">
-            <Flex style={{ width: 40, paddingBottom: 5 }}>
-              <CloseOutlined onClick={close} width={48} height={48} />
-            </Flex>
+          <TitleInner justify="space-between" align="center">
+            <div style={{ height: 40, width: 40 }}></div>
             <Title style={{ margin: 0 }} level={4}>
               리뷰
             </Title>
-            <Button type="link" onClick={close} style={{ paddingTop: 3 }} size="small">
-              완료
-            </Button>
+            <Flex style={{ width: 40, paddingBottom: 5 }}>
+              <CloseOutlined onClick={close} width={48} height={48} />
+            </Flex>
           </TitleInner>
         </TitleContainer>
         <ReviewThemeItem item={item} />

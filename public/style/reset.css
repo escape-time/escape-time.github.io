@@ -223,6 +223,7 @@ textarea {
   margin-top: 0 !important;
 }
 
+.ant-cascader-menu-item-content,
 .ant-typography,
 .ant-radio-wrapper span,
 .ant-picker-body,

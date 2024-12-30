@@ -167,7 +167,7 @@ const CardWrap = styled.section`
   text-decoration: none;
   transition: 0.3s ease;
   cursor: pointer;
-  flex: 1;
+  flex-shrink: 0;
 
   margin-right: 10px;
   margin-left: 10px;

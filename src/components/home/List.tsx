@@ -121,7 +121,7 @@ export const List = ({
           <Spin size="large" />
         </Flex>
       ) : (
-        <Flex align="center" wrap>
+        <Flex align="center" wrap style={{ width: '100%' }}>
           {filteredData.length === 0 && <Empty />}
           {displayedItems.map((item: ITEM_TYPE) => (
             <Card

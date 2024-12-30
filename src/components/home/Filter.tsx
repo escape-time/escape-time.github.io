@@ -164,7 +164,7 @@ export const Filter = ({ filters, setFilters }: FilterProps) => {
           onChange={handleLocationChange}
           placeholder="지역 선택"
           style={{ width: 130 }}
-          allowClear
+          allowClear={false}
           expandTrigger="hover"
         />
         <Input

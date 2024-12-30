@@ -5,13 +5,16 @@ import TextArea from 'antd/es/input/TextArea';
 import { useOneLineReview } from '../../../hook/use-oneline-review';
 import { oneLineReviewStore } from '../../../store/online-review-store';
 import { ITEM_TYPE } from '../../../type';
+import { Spinner } from '../Spinner';
 
 const { Title } = Typography;
-export const SimpleReview = ({ item, close }: { item: ITEM_TYPE; close: () => void }) => {
-  const { text, rating, id, updateRating, updateText, resetReviews } = oneLineReviewStore();
-  const { addOneLineReview } = useOneLineReview();
+export const SimpleReview = ({ item }: { item: ITEM_TYPE; close: () => void }) => {
+  const { text, rating, id, updateRating, updateText, isUpdate, setUpdate } = oneLineReviewStore();
+  const { addOneLineReview, updateOneLineReview, isLoading } = useOneLineReview();
+
   return (
     <>
+      {isLoading && <Spinner />}
       <Space direction="vertical" align={'center'} style={{ width: '100%' }}>
         <Title level={4}>만족한 정도를 알려주세요.</Title>
         <Rate value={rating} allowHalf style={{ fontSize: 40, color: COLOR.default }} onChange={updateRating} />
@@ -29,18 +32,25 @@ export const SimpleReview = ({ item, close }: { item: ITEM_TYPE; close: () => vo
       <CompleteContainer>
         <CompleteButton
           onClick={async () => {
-            console.log(item.id);
-            await addOneLineReview({
-              id,
-              rating,
-              text,
-              resetReviews,
-              themeId: item.id,
-            });
-            close();
+            if (!isUpdate) {
+              await addOneLineReview({
+                id,
+                rating,
+                text,
+                themeId: item.id,
+              });
+            } else {
+              await updateOneLineReview({
+                id,
+                rating,
+                text,
+                themeId: item.id,
+              });
+            }
+            setUpdate(true);
           }}
         >
-          완료
+          {isUpdate ? '수정' : '완료'}
         </CompleteButton>
       </CompleteContainer>
     </>

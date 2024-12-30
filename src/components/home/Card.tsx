@@ -36,7 +36,15 @@ export const Card = ({
 
   return (
     <>
-      <ReviewBottomSheet open={open} close={() => setOpen(false)} item={selectItem} />
+      <ReviewBottomSheet
+        open={open}
+        close={() => {
+          setOpen(false);
+          resetDetailReview();
+          resetOneLineReviews();
+        }}
+        item={selectItem}
+      />
       <CardWrap key={item.id} style={{ backgroundColor: oneLineReview || detailReview ? '#21f765' : '' }}>
         {item.isHorror && (
           <HorrorTextContainer>
@@ -159,6 +167,7 @@ const CardWrap = styled.section`
   text-decoration: none;
   transition: 0.3s ease;
   cursor: pointer;
+  flex: 1;
 
   margin-right: 10px;
   margin-left: 10px;

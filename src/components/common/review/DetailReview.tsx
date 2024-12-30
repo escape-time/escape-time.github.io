@@ -46,6 +46,7 @@ export const DetailReview = ({ item }: { item: ITEM_TYPE }) => {
     setEtc,
     id,
     isUpdate,
+    setIsUpdate,
   } = detailReviewStore();
   return (
     <>
@@ -247,7 +248,7 @@ export const DetailReview = ({ item }: { item: ITEM_TYPE }) => {
                 is_success,
               });
             } else {
-              updateDetailReview({
+              await updateDetailReview({
                 description,
                 group_cnt,
                 health_cnt,
@@ -267,7 +268,7 @@ export const DetailReview = ({ item }: { item: ITEM_TYPE }) => {
                 id,
               });
             }
-            close();
+            setIsUpdate(true);
           }}
         >
           {isUpdate ? '수정' : '완료'}

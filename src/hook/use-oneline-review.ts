@@ -1,11 +1,11 @@
 import { useCallback, useState } from 'react';
 import { supabase } from '../utils/supabase';
 import { useAuth } from './use-auth';
-import { OneLineReviewType } from '../type';
+import { listStore } from '../store/list-store';
 
 export const useOneLineReview = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [oneLineReviewList, setOneLineReviewList] = useState<OneLineReviewType[]>([]);
+  const { setOneLineReviewList, oneLineReviewList } = listStore();
   const { user } = useAuth();
 
   const getOneLineReviewList = useCallback(async () => {
@@ -21,7 +21,7 @@ export const useOneLineReview = () => {
     } finally {
       setIsLoading(false);
     }
-  }, [user]);
+  }, [user, setOneLineReviewList]);
 
   const getOneLineReview = async (themeId: string) => {
     try {
@@ -41,30 +41,57 @@ export const useOneLineReview = () => {
     id,
     rating,
     text,
-    resetReviews,
     themeId,
   }: {
     id: string;
     rating: number;
     text: string;
-    resetReviews: () => void;
     themeId: string;
   }) => {
     setIsLoading(true);
     try {
-      const result = await supabase.from('online_reviews').insert({
+      await supabase.from('online_reviews').insert({
         id,
         rating,
         text,
         theme_id: themeId,
         user_id: user?.id || '',
       });
-      console.log(result);
       await getOneLineReviewList();
     } catch (error) {
       console.log(error);
     } finally {
-      resetReviews();
+      setIsLoading(false);
+    }
+  };
+
+  const updateOneLineReview = async ({
+    id,
+    rating,
+    text,
+    themeId,
+  }: {
+    id: string;
+    rating: number;
+    text: string;
+    themeId: string;
+  }) => {
+    setIsLoading(true);
+    try {
+      await supabase
+        .from('online_reviews')
+        .update({
+          id,
+          rating,
+          text,
+          theme_id: themeId,
+          user_id: user?.id || '',
+        })
+        .eq('id', id);
+      await getOneLineReviewList();
+    } catch (error) {
+      console.log(error);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -75,5 +102,6 @@ export const useOneLineReview = () => {
     getOneLineReview,
     addOneLineReview,
     isLoading,
+    updateOneLineReview,
   };
 };

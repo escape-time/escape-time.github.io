@@ -10,6 +10,7 @@ export const oneLineReviewStore = create<{
   updateText: (t: string) => void;
   resetOneLineReviews: () => void;
   setOneLineReview: (review: { id: string; rating: number; text: string }) => void;
+  setUpdate: (isUpdate: boolean) => void;
 }>((set) => ({
   id: v4(),
   rating: 0,
@@ -34,5 +35,11 @@ export const oneLineReviewStore = create<{
 
   setOneLineReview: (review) => {
     set({ ...review, isUpdate: true });
+  },
+
+  setUpdate: (isUpdate: boolean) => {
+    set({
+      isUpdate,
+    });
   },
 }));

@@ -58,8 +58,8 @@ export const List = ({
         (filters.location === '' || item.location === filters.location) &&
         (filters.area === '' || item.area === filters.area) &&
         (filters.searchTerm === '' ||
-          (item.title + '').includes(filters.searchTerm) ||
-          (item.branchName + '').includes(filters.searchTerm))
+          (item.title + '').toLowerCase().includes(filters.searchTerm.toLowerCase()) ||
+          (item.branchName + '').toLowerCase().includes(filters.searchTerm.toLowerCase()))
       );
     });
   }, [filters, itemDataList]);

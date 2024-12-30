@@ -2,10 +2,11 @@ import { useCallback, useState } from 'react';
 import { useAuth } from './use-auth';
 import { supabase } from '../utils/supabase';
 import { DetailReviewType } from '../type';
+import { listStore } from '../store/list-store';
 
 export const useDetailReview = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const [detailReviewList, setDetailReviewList] = useState<DetailReviewType[]>([]);
+  const { setDetailReviewList, detailReviewList } = listStore();
   const { user } = useAuth();
 
   const getDetailReviewList = useCallback(async () => {
@@ -18,7 +19,7 @@ export const useDetailReview = () => {
       console.error('Error fetching reviews:', error);
       throw error;
     }
-  }, [user]);
+  }, [user, setDetailReviewList]);
 
   const addDetailReview = async (params: DetailReviewType) => {
     setIsLoading(true);

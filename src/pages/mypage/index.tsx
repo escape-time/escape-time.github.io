@@ -4,17 +4,17 @@ import { loginModalStore } from '../../store/login-modal-store';
 import { Button, Divider, Flex, Spin, Typography } from 'antd';
 import styled from 'styled-components';
 import { COLOR } from '../../utils/color';
-import { useOneLineReview } from '../../hook/use-oneline-review';
-import { useDetailReview } from '../../hook/use-detail-review';
 import { authStore } from '../../store/auth-store';
+import { detailReviewStore } from '../../store/detail-review-store';
+import { oneLineReviewStore } from '../../store/online-review-store';
 
 const { Title } = Typography;
 export const MyPage = () => {
   const { showVisible } = loginModalStore();
   const { signOutKakao } = useAuth();
   const { user, loading } = authStore();
-  const { oneLineReviewList, getOneLineReviewList } = useOneLineReview();
-  const { detailReviewList, getDetailReviewList } = useDetailReview();
+  const { oneLineReviewList, getOneLineReviewList } = oneLineReviewStore();
+  const { detailReviewList, getDetailReviewList } = detailReviewStore();
 
   useEffect(() => {
     if (!loading && !user) {

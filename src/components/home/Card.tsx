@@ -1,33 +1,29 @@
 import { Button, Flex, Typography } from 'antd';
-import { DetailReviewType, ITEM_TYPE, OneLineReviewType } from '../../type';
+import { ITEM_TYPE } from '../../type';
 import styled from 'styled-components';
 import { useModalStore } from '../../store/modal-store';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { useState } from 'react';
 import { ReviewBottomSheet } from '../common/review/ReviewBottomSheet';
 import { COLOR } from '../../utils/color';
 import { loginModalStore } from '../../store/login-modal-store';
-import { detailReviewStore } from '../../store/detail-review-store';
-import { oneLineReviewStore } from '../../store/online-review-store';
 import { authStore } from '../../store/auth-store';
+import { oneLineReviewStore } from '../../store/online-review-store';
+import { detailReviewStore } from '../../store/detail-review-store';
+import { CalendarFilled } from '@ant-design/icons';
 
 const { Title } = Typography;
-export const Card = ({
-  item,
-  oneLineReview,
-  detailReview,
-}: {
-  item: ITEM_TYPE;
-  oneLineReview: OneLineReviewType | undefined;
-  detailReview: DetailReviewType | undefined;
-}) => {
-  const { showVisible } = loginModalStore();
-  const { user } = authStore();
+export const Card = ({ item }: { item: ITEM_TYPE }) => {
+  const nav = useNavigate();
   const [open, setOpen] = useState(false);
   const [selectItem, setSeletItem] = useState<ITEM_TYPE>();
+  const { oneLineReviewList } = oneLineReviewStore();
+  const { detailReviewList } = detailReviewStore();
+  const { showVisible } = loginModalStore();
+  const { user } = authStore();
   const { setIsVisible, setSelectedId } = useModalStore();
-  const { setDetailReview, resetDetailReview } = detailReviewStore();
-  const { setOneLineReview, resetOneLineReviews } = oneLineReviewStore();
+  const oneLineReview = oneLineReviewList.find((i) => i.theme_id === item?.id);
+  const detailReview = detailReviewList.find((i) => i.theme_id === item?.id);
 
   const handleImageError: React.ReactEventHandler<HTMLImageElement> = (e) => {
     const target = e.target as HTMLImageElement;
@@ -40,12 +36,13 @@ export const Card = ({
         open={open}
         close={() => {
           setOpen(false);
-          resetDetailReview();
-          resetOneLineReviews();
         }}
         item={selectItem}
       />
       <CardWrap key={item.id} style={{ backgroundColor: oneLineReview || detailReview ? '#21f765' : '' }}>
+        <CalendarContainer onClick={() => nav(`/calendar?themeId=${item.id}`)}>
+          <CalendarFilled />
+        </CalendarContainer>
         {item.isHorror && (
           <HorrorTextContainer>
             <GenreTag color="danger" variant="solid">
@@ -94,19 +91,9 @@ export const Card = ({
             size="large"
             type="default"
             onClick={() => {
-              if (user) {
+              if (!user) {
                 showVisible();
                 return;
-              }
-              if (oneLineReview) {
-                setOneLineReview(oneLineReview);
-              } else {
-                resetOneLineReviews();
-              }
-              if (detailReview) {
-                setDetailReview(detailReview);
-              } else {
-                resetDetailReview();
               }
               setOpen(true);
               setSeletItem(item);
@@ -156,6 +143,21 @@ const BottomButton = styled(Button)`
   &:nth-child(2) {
     border-bottom-right-radius: 10px;
     border: none;
+  }
+`;
+
+const CalendarContainer = styled.div`
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  background-color: white;
+  padding-left: 3px;
+  padding-right: 3px;
+  border-radius: 10px;
+
+  font-size: 30px;
+  svg {
+    fill: ${COLOR.lightBlue};
   }
 `;
 

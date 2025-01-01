@@ -6,10 +6,11 @@ import { createGlobalStyle } from 'styled-components';
 import { CommonModal } from './components/common/CommonModal';
 import { ConfigProvider } from 'antd';
 import { BottomTab } from './components/common/BottomTab';
-import { CalendarPage } from './pages/calendar';
 import { ReviewPage } from './pages/review';
 import { MyPage } from './pages/mypage';
 import { LoginModal } from './components/common/LoginModal';
+import { CalendarPage } from './pages/calendar';
+import { COLOR } from './utils/color';
 
 // eslint-disable-next-line react-refresh/only-export-components
 const GlobalStyle = createGlobalStyle`
@@ -25,8 +26,8 @@ createRoot(document.getElementById('root')!).render(
   <ConfigProvider
     theme={{
       token: {
-        colorPrimary: '365486',
-        colorLink: '365486',
+        colorPrimary: COLOR.lightBlue,
+        colorLink: COLOR.lightBlue,
       },
     }}
   >

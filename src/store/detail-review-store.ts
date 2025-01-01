@@ -2,6 +2,8 @@ import { create } from 'zustand';
 import { v4 } from 'uuid';
 import dayjs from 'dayjs';
 import { DetailReviewType } from '../type';
+import { supabase } from '../utils/supabase';
+import { authStore } from './auth-store';
 
 interface DetailReview {
   id: string;
@@ -25,6 +27,8 @@ interface DetailReview {
 }
 
 interface DetailReviewActions {
+  detailReviewList: DetailReviewType[];
+  isLoading: boolean;
   setSuccess: (value: boolean) => void;
   setGroupCnt: (value: number) => void;
   setVisitDate: (date: dayjs.Dayjs) => void;
@@ -43,6 +47,11 @@ interface DetailReviewActions {
   resetDetailReview: () => void;
   setDetailReview: (review: DetailReviewType) => void;
   setIsUpdate: (u: boolean) => void;
+  setDetailReviewList: (detailList: DetailReviewType[]) => void;
+  getDetailReviewList: () => Promise<void>;
+  setIsLoading: (isLoading: boolean) => void;
+  addDetailReview: (params: DetailReviewType) => Promise<void>;
+  updateDetailReview: (params: DetailReviewType) => Promise<void>;
 }
 
 type DetailReviewStore = DetailReview & DetailReviewActions;
@@ -68,8 +77,12 @@ const initialState: DetailReview = {
   isUpdate: false,
 };
 
-export const detailReviewStore = create<DetailReviewStore>((set) => ({
+export const detailReviewStore = create<DetailReviewStore>()((set, get) => ({
   ...initialState,
+  detailReviewList: [],
+  isLoading: false,
+  setIsLoading: (isLoading) => set({ isLoading }),
+  setDetailReviewList: (detailReviewList) => set({ detailReviewList }),
   setSuccess: (value) => set({ is_success: value }),
   setGroupCnt: (value) => set({ group_cnt: value }),
   setVisitDate: (date) => set({ visit_date: date }),
@@ -88,4 +101,88 @@ export const detailReviewStore = create<DetailReviewStore>((set) => ({
   resetDetailReview: () => set({ ...initialState, id: v4() }),
   setDetailReview: (review) => set({ ...review, visit_date: dayjs(review.visit_date), isUpdate: true }),
   setIsUpdate: (value) => set({ isUpdate: value }),
+  getDetailReviewList: async () => {
+    const user = authStore.getState().user;
+    if (!user) return;
+    try {
+      const { data } = await supabase.from('detail_reviews').select('*').eq('user_id', user?.id);
+      set({ detailReviewList: data || [] });
+    } catch (error) {
+      console.error('Error fetching reviews:', error);
+    }
+  },
+  addDetailReview: async (params: DetailReviewType) => {
+    const user = authStore.getState().user;
+    get().setIsLoading(true);
+    try {
+      // 리뷰 생성
+      const { data } = await supabase
+        .from('detail_reviews')
+        .insert([
+          {
+            is_success: params.is_success,
+            group_cnt: params.group_cnt,
+            visit_date: params.visit_date,
+            use_hint_cnt: params.use_hint_cnt,
+            play_time_minutes: params.play_time_minutes,
+            play_time_seconds: params.play_time_seconds,
+            satisfies_cnt: params.satisfies_cnt,
+            story_cnt: params.story_cnt,
+            problem_cnt: params.problem_cnt,
+            interior_cnt: params.interior_cnt,
+            level: params.level,
+            horror_cnt: params.horror_cnt,
+            health_cnt: params.health_cnt,
+            description: params.description,
+            theme_id: params.theme_id,
+            etc: params.etc,
+            user_id: user?.id,
+          },
+        ])
+        .select()
+        .single();
+      await get().getDetailReviewList();
+      console.log(data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      get().setIsLoading(false);
+    }
+  },
+  updateDetailReview: async (params: DetailReviewType) => {
+    const { user } = authStore();
+    get().setIsLoading(true);
+    try {
+      // 리뷰 생성
+      await supabase
+        .from('detail_reviews')
+        .update({
+          is_success: params.is_success,
+          group_cnt: params.group_cnt,
+          visit_date: params.visit_date,
+          use_hint_cnt: params.use_hint_cnt,
+          play_time_minutes: params.play_time_minutes,
+          play_time_seconds: params.play_time_seconds,
+          satisfies_cnt: params.satisfies_cnt,
+          story_cnt: params.story_cnt,
+          problem_cnt: params.problem_cnt,
+          interior_cnt: params.interior_cnt,
+          level: params.level,
+          horror_cnt: params.horror_cnt,
+          health_cnt: params.health_cnt,
+          description: params.description,
+          theme_id: params.theme_id,
+          etc: params.etc,
+          user_id: user?.id,
+        })
+        .eq('id', params.id)
+        .select()
+        .single();
+      await get().getDetailReviewList();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      get().setIsLoading(false);
+    }
+  },
 }));

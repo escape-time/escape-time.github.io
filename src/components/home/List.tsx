@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { Flex, Empty } from 'antd';
 import { Pagination } from 'antd';
-import { DetailReviewType, ITEM_TYPE, OneLineReviewType } from '../../type';
+import { ITEM_TYPE } from '../../type';
 import data from '../../assets/data/new-data.json';
 import { useSearchParams } from 'react-router';
 import { Card } from './Card';
@@ -9,13 +9,7 @@ import { Filter } from './Filter';
 
 const DEFAULT_ITEMS_PER_PAGE = 60;
 
-export const List = ({
-  oneLineReviewList,
-  detailReviewList,
-}: {
-  oneLineReviewList: OneLineReviewType[];
-  detailReviewList: DetailReviewType[];
-}) => {
+export const List = () => {
   const listRef = useRef<HTMLDivElement>(null);
   const itemDataList = data as ITEM_TYPE[];
   const [searchParams, setSearchParams] = useSearchParams();
@@ -90,12 +84,7 @@ export const List = ({
           </Flex>
         )}
         {currentPageData.map((item: ITEM_TYPE) => (
-          <Card
-            item={item}
-            key={item.id}
-            oneLineReview={oneLineReviewList.find((i) => i.theme_id === item.id)}
-            detailReview={detailReviewList.find((i) => i.theme_id === item.id)}
-          />
+          <Card item={item} key={item.id} />
         ))}
       </Flex>
       {currentPageData.length !== 0 && (

@@ -27,6 +27,7 @@ export const ReviewBottomSheet = ({
   close: () => void;
 }) => {
   const [reviewType, setReviewType] = useState(REVIEW_TYPE.SIMPLE);
+
   if (!item) return <></>;
   return (
     <BottomSheet

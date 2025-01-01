@@ -5,15 +5,15 @@ import { COLOR } from '../../../utils/color';
 import { FrownFilled, SmileFilled } from '@ant-design/icons';
 import { ITEM_TYPE } from '../../../type';
 import { detailReviewStore } from '../../../store/detail-review-store';
-import { useDetailReview } from '../../../hook/use-detail-review';
 import { Spinner } from '../Spinner';
 import { useShareTheme } from '../../../hook/use-shared-theme';
+import { useEffect } from 'react';
 
 const { Title, Text } = Typography;
 
 export const DetailReview = ({ item }: { item: ITEM_TYPE }) => {
   const { requestWriteReview } = useShareTheme();
-  const { addDetailReview, updateDetailReview, isLoading } = useDetailReview();
+  const { addDetailReview, updateDetailReview, isLoading } = detailReviewStore();
   const {
     is_success,
     group_cnt,
@@ -47,7 +47,20 @@ export const DetailReview = ({ item }: { item: ITEM_TYPE }) => {
     id,
     isUpdate,
     setIsUpdate,
+    detailReviewList,
+    setDetailReview,
+    resetDetailReview,
   } = detailReviewStore();
+
+  useEffect(() => {
+    const detailReview = detailReviewList.find((i) => i.theme_id === item?.id);
+    if (detailReview) {
+      setDetailReview(detailReview);
+    } else {
+      resetDetailReview();
+    }
+  }, [detailReviewList, resetDetailReview, setDetailReview, item?.id]);
+
   return (
     <>
       {isLoading && <Spinner />}

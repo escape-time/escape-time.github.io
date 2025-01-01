@@ -2,15 +2,25 @@ import { Divider, Rate, Space, Typography } from 'antd';
 import styled from 'styled-components';
 import { COLOR } from '../../../utils/color';
 import TextArea from 'antd/es/input/TextArea';
-import { useOneLineReview } from '../../../hook/use-oneline-review';
 import { oneLineReviewStore } from '../../../store/online-review-store';
 import { ITEM_TYPE } from '../../../type';
 import { Spinner } from '../Spinner';
+import { useEffect } from 'react';
 
 const { Title } = Typography;
 export const SimpleReview = ({ item }: { item: ITEM_TYPE; close: () => void }) => {
   const { text, rating, id, updateRating, updateText, isUpdate, setUpdate } = oneLineReviewStore();
-  const { addOneLineReview, updateOneLineReview, isLoading } = useOneLineReview();
+  const { addOneLineReview, updateOneLineReview, isLoading } = oneLineReviewStore();
+
+  const { oneLineReviewList, setOneLineReview, resetOneLineReviews } = oneLineReviewStore();
+  useEffect(() => {
+    const oneLineReview = oneLineReviewList.find((i) => i.theme_id === item?.id);
+    if (oneLineReview) {
+      setOneLineReview(oneLineReview);
+    } else {
+      resetOneLineReviews();
+    }
+  }, [item?.id, oneLineReviewList, resetOneLineReviews, setOneLineReview]);
 
   return (
     <>
@@ -37,14 +47,14 @@ export const SimpleReview = ({ item }: { item: ITEM_TYPE; close: () => void }) =
                 id,
                 rating,
                 text,
-                themeId: item.id,
+                theme_id: item.id,
               });
             } else {
               await updateOneLineReview({
                 id,
                 rating,
                 text,
-                themeId: item.id,
+                theme_id: item.id,
               });
             }
             setUpdate(true);

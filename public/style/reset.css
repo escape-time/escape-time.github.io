@@ -279,3 +279,122 @@ input[type='number'] {
   border-left: 1px solid rgba(5, 5, 5, 0.06);
   border-right: 1px solid rgba(5, 5, 5, 0.06);
 }
+
+.rbc-header {
+  font-size: 14px;
+  line-height: 18px;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
+
+.rbc-month-header .rbc-header:nth-child(1) {
+  color: red;
+}
+
+.rbc-month-header .rbc-header:nth-child(7) {
+  color: blue;
+}
+
+.rbc-row-content .rbc-date-cell {
+  text-align: center;
+  padding-right: 0;
+  padding-top: 5px;
+}
+
+.rbc-row-content .rbc-date-cell:nth-child(1) {
+  color: red;
+}
+
+.rbc-row-content .rbc-date-cell:nth-child(7) {
+  color: blue;
+}
+
+.rbc-timeslot-group {
+  padding-top: 15px;
+}
+
+.rbc-event-content {
+  padding-top: 3px;
+  font-size: 12px;
+}
+
+.rbc-toolbar-label {
+  padding-top: 3px !important;
+}
+
+.rbc-toolbar {
+  padding-left: 20px;
+  padding-right: 20px;
+  margin-top: 10px;
+}
+
+.rbc-event {
+  position: relative;
+  padding-left: 16px !important;
+}
+
+.event-with-dot-:after {
+  content: '';
+  left: 5px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #808080;
+  position: absolute;
+}
+
+.event-with-dot-808080:after {
+  background-color: #808080;
+}
+.event-with-dot-36454F:after {
+  background-color: #36454f;
+}
+.event-with-dot-000000:after {
+  background-color: #000000;
+}
+
+/* 차분한 컬러 */
+.event-with-dot-000080:after {
+  background-color: #000080;
+}
+.event-with-dot-800020:after {
+  background-color: #800020;
+}
+.event-with-dot-006400:after {
+  background-color: #006400;
+}
+
+/* 파스텔톤 */
+.event-with-dot-AEC6CF:after {
+  background-color: #aec6cf;
+}
+.event-with-dot-FFD1DC:after {
+  background-color: #ffd1dc;
+}
+.event-with-dot-98FF98:after {
+  background-color: #98ff98;
+}
+
+/* 자연색 */
+.event-with-dot-F5F5DC:after {
+  background-color: #f5f5dc;
+}
+.event-with-dot-C3B091:after {
+  background-color: #c3b091;
+}
+.event-with-dot-808000:after {
+  background-color: #808000;
+}
+
+/* 밝은 컬러 */
+.event-with-dot-87CEEB:after {
+  background-color: #87ceeb;
+}
+.event-with-dot-FF7F50:after {
+  background-color: #ff7f50;
+}
+.event-with-dot-E6E6FA:after {
+  background-color: #e6e6fa;
+}

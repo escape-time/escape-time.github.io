@@ -1,16 +1,16 @@
 import styled from 'styled-components';
 import { List } from '../../components/home/List';
 import { Flex } from 'antd';
-import { useOneLineReview } from '../../hook/use-oneline-review';
 import { useEffect } from 'react';
-import { useDetailReview } from '../../hook/use-detail-review';
 import { Spinner } from '../../components/common/Spinner';
 import { authStore } from '../../store/auth-store';
+import { detailReviewStore } from '../../store/detail-review-store';
+import { oneLineReviewStore } from '../../store/online-review-store';
 
 export const Home = () => {
   const { user, loading } = authStore();
-  const { oneLineReviewList, getOneLineReviewList } = useOneLineReview();
-  const { detailReviewList, getDetailReviewList } = useDetailReview();
+  const { getOneLineReviewList } = oneLineReviewStore();
+  const { getDetailReviewList } = detailReviewStore();
 
   useEffect(() => {
     if (!loading && !user) {
@@ -23,7 +23,7 @@ export const Home = () => {
     <>
       {loading && <Spinner />}
       <Inner wrap justify="center">
-        <List oneLineReviewList={oneLineReviewList} detailReviewList={detailReviewList} />
+        <List />
       </Inner>
     </>
   );
